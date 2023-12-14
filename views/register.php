@@ -1,3 +1,7 @@
+<?php 
+  include "../controllers/registration.php";
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -23,35 +27,35 @@
 			<div class="row justify-content-center">
 				<div class="col-md-6 col-lg-4">
 					<div class="login-wrap p-0">
-		      	<h3 class="mb-4 text-center">Dont have ave an account?</h3>
-		      	<form action="#" class="signin-form">
+		      	<h3 class="mb-4 text-center">Dont have an account?</h3>
+		      	<form action="#" class="signin-form" method="post" autocomplete="off">
 		      		<div class="form-group">
-		      			<input type="text" class="form-control" placeholder="Full Name" required>
+		      			<input type="text" class="form-control" name="name" placeholder="Full Name" required>
 		      		</div>
                       <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Username" required>
+                        <input type="text" class="form-control" name="username" placeholder="Username" required>
                     </div>
                     <div class="form-group">
-                        <input type="email" class="form-control" placeholder="Email" required>
+                        <input type="email" class="form-control" name="email" placeholder="Email" required>
                     </div>
                     
 	            <div class="form-group">
-	              <input id="password-field" type="password" class="form-control" placeholder="Password" required>
+	              <input id="password-field" type="password" name="password" class="form-control" placeholder="Password" required>
 	              
 	            </div>
 
                 <div class="form-group">
-                    <input id="password-field" type="password" class="form-control" placeholder="Confirm Password" required>
+                    <input id="password-field" type="password"   name="confirmpassword"class="form-control" placeholder="Confirm Password" required>
                     
                   </div>
 	            <div class="form-group">
-	            	<button type="submit" class="form-control btn btn-primary submit px-3">Sign Up</button>
+	            	<button type="submit" name="submit" class="form-control btn btn-primary submit px-3">Sign Up</button>
 	            </div>
 	            
 	          </form>
 	          <p class="w-100 text-center">&mdash;  have an occount ? &mdash;</p>
 	          <div class="social d-flex text-center">
-	          	<a href="index.html" class="px-2 py-2 mr-md-1 rounded"><span class="ion-logo-facebook mr-2"></span> SIGN IN </a>
+	          	<a href="login.php" class="px-2 py-2 mr-md-1 rounded"><span class="ion-logo-facebook mr-2"></span> SIGN IN </a>
 	          	
 	          </div>
 		      </div>
