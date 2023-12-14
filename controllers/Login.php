@@ -13,7 +13,25 @@ if(isset($_POST["submit"])){
   if($result == 1){
     $_SESSION["login"] = true;
     $_SESSION["id"] = $login->idUser();
-    header("Location: ../home.php");
+    
+              // $role = $row["id_role"];
+
+              // switch ($role) {
+              //     case 1:
+              //         $path = "";
+              //         break;
+              //     case 2:
+              //         $path = "../home.php";
+              //         break;
+              //     default:
+              //         $path = "";
+              //         break;
+              // }
+
+              // header("Location: " . $path);
+              // exit(); 
+              
+   header("location:../home.php");
   }
   elseif($result == 10){
     echo

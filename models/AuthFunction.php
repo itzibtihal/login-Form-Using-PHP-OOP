@@ -27,18 +27,20 @@ class Register extends Connection{
     $duplicate = mysqli_query($this->conn, "SELECT * FROM tb_user WHERE username = '$username' OR email = '$email'");
     if(mysqli_num_rows($duplicate) > 0){
       return 10;
-      // Username or email has already taken
+      
     }
     else{
       if($password == $confirmpassword){
-        $query = "INSERT INTO tb_user VALUES('', '$name', '$username', '$email', '$password')";
+        $hashedPwd = password_hash($password, PASSWORD_DEFAULT);
+        $id_role = 2 ;
+        $query = "INSERT INTO t_user VALUES('', '$name', '$username', '$email', '$hashedPwd',$id_role )";
         mysqli_query($this->conn, $query);
         return 1;
-        // Registration successful
+       
       }
       else{
         return 100;
-        // Password does not match
+        // Pass not match
       }
     }
   }
@@ -47,33 +49,60 @@ class Register extends Connection{
 
 
 
-class Login extends Connection{
+class Login extends Connection {
   public $id;
-  public function login($usernameemail, $password){
-    $result = mysqli_query($this->conn, "SELECT * FROM tb_user WHERE username = '$usernameemail' OR email = '$usernameemail'");
-    $row = mysqli_fetch_assoc($result);
 
-    if(mysqli_num_rows($result) > 0){
-      if($password == $row["password"]){
-        $this->id = $row["id"];
-        return 1;
-        // Login successful
-      }
-      else{
-        return 10;
-        // Wrong password
-      }
-    }
-    else{
-      return 100;
-      // User not registered
-    }
-  }
-
-  public function idUser(){
-    return $this->id;
-  }
+  const LOGIN_SUCCESSFUL = 1;
+  const WRONG_PASSWORD = 10;
+  const USER_NOT_REGISTERED = 100;
+  
+  protected function getUserData($usernameemail) {
+    $result = mysqli_query($this->conn, "SELECT * FROM t_user WHERE username = '$usernameemail' OR email = '$usernameemail'");
+    return mysqli_fetch_assoc($result);
 }
+
+public function idUser() {
+    return $this->id;
+}
+
+  public function login($usernameemail, $password) {
+      $row = $this->getUserData($usernameemail);
+
+      // var_dump($row);
+      if ($row) {
+          
+          if (password_verify($password, $row["password"])) {
+              $this->id = $row["ID"];
+
+             
+              // $role = $row["id_role"];
+
+              // switch ($role) {
+              //     case 1:
+              //         $path = "";
+              //         break;
+              //     case 2:
+              //         $path = "../home.php";
+              //         break;
+              //     default:
+              //         $path = "";
+              //         break;
+              // }
+
+              // header("Location: " . $path);
+              // exit(); 
+              return self::LOGIN_SUCCESSFUL;
+          } else {
+              return self::WRONG_PASSWORD;
+          }
+      } else {
+          return self::USER_NOT_REGISTERED;
+      }
+  }
+
+  
+}
+
 
 
 
@@ -81,7 +110,7 @@ class Login extends Connection{
 
 class Select extends Connection{
   public function selectUserById($id){
-    $result = mysqli_query($this->conn, "SELECT * FROM tb_user WHERE id = $id");
+    $result = mysqli_query($this->conn, "SELECT * FROM t_user WHERE id = $id");
     return mysqli_fetch_assoc($result);
   }
 }

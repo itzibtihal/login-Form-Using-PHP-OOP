@@ -7,7 +7,7 @@ if(!empty($_SESSION["id"])){
   $user = $select->selectUserById($_SESSION["id"]);
 }
 else{
-  header("Location: index.php");
+  header("Location:home.php");
 }
 ?>
 <!DOCTYPE html>
